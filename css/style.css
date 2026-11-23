@@ -1810,3 +1810,174 @@ a.lec-card:active { transform: translate(1px, 1px); box-shadow: var(--shadow-1);
   font-variant-ligatures: none;
   font-feature-settings: "liga" 0, "calt" 0, "dlig" 0;
 }
+
+/* ==========================================================================
+   ---------- 11. Phone refinements (appended; keep at END of file) ----------
+   Everything below only applies to narrow screens and/or touch pointers.
+   ========================================================================== */
+
+/* 1. iOS Safari zooms the page when a focused control is < 16px */
+@media (pointer: coarse), (max-width: 640px) {
+  input[type="text"], input[type="number"], input[type="password"],
+  input[type="search"], input[type="tel"], input[type="email"], input:not([type]),
+  select, textarea { font-size: 16px; }
+  input[type="number"] { width: 6.25em; }
+}
+
+/* 7. bigger tap targets on touch */
+@media (pointer: coarse) {
+  .code .line[tabindex], .code .line[role="button"] { padding-top: 5px; padding-bottom: 5px; }
+  .bar-chart:not(.bar-chart--cols) > button.bar-row,
+  .bar-chart:not(.bar-chart--cols) > .bar-row[role="button"],
+  .bar-chart:not(.bar-chart--cols) > .bar-row[tabindex],
+  .bar-chart:not(.bar-chart--cols) > .bar-row[aria-pressed] { min-height: 38px; }
+  .nav-sub a { padding-top: 8px; padding-bottom: 8px; }
+}
+
+@media (max-width: 640px) {
+  /* 2. code: wrap long lines; continuation hangs right of the line-number gutter */
+  .code {
+    --gutter: 2.9em;
+    font-size: .8125rem;
+    line-height: 1.7;
+    tab-size: 2;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    overflow-x: hidden;
+  }
+  .code .line {
+    position: relative;
+    min-width: 0;
+    max-width: 100%;
+    padding-left: var(--gutter);
+    padding-right: var(--s2);
+  }
+  .code .line::before {
+    position: absolute;
+    left: 0;
+    width: calc(var(--gutter) - .8em);
+    margin-right: 0;
+  }
+  .code--plain .line { padding-left: var(--s3); }
+  .code:not(:has(.line)) { padding: var(--s3); }
+
+  /* 3. tables: let cells wrap so ordinary tables fit; truly wide ones still scroll */
+  .table { font-size: .875rem; }
+  .table th, .table td { padding: 8px 10px; overflow-wrap: anywhere; }
+  .table thead th { white-space: normal; letter-spacing: 0; }
+  .table td code, .table th code { white-space: normal; overflow-wrap: normal; }
+  .table td:first-child, .table th:first-child { overflow-wrap: normal; }
+
+  /* 4. long pills / badges / chips wrap instead of overflowing */
+  .badge, .pill-ok, .pill-err, .pill-info, .chip, .widget-tag {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: left;
+    border-radius: 12px;
+  }
+  .badge { border-radius: 5px; }
+  .pill-ok::before, .pill-err::before, .widget-tag::before { flex: none; }
+
+  /* 5. cell strips wrap like .cells */
+  .cells--nowrap { flex-wrap: wrap; width: auto; max-width: 100%; }
+  .cells--tight { row-gap: 4px; }
+
+  /* 8. bar labels: a little smaller so "unsigned int" fits its column */
+  .bar-row { gap: var(--s2); font-size: .74rem; letter-spacing: -.01em; }
+  .bar-label { text-overflow: clip; }
+  .bar-value { min-width: 2ch; }
+
+  /* misc fit */
+  .kv { grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); }
+  .kv dd { font-size: 1rem; }
+  .console { font-size: .8125rem; }
+  .widget-controls { gap: var(--s2); }
+  .widget-controls .spacer { display: none; }
+  .seg > button { padding-inline: 10px; }
+  .field, .field > input, .field > select { max-width: 100%; }
+  .frame-vars { overflow-wrap: anywhere; }
+  .topbar > * { min-width: 0; }
+  .topbar > .menu-btn, .topbar > .theme-toggle { flex: none; }
+  .home-hero h1 { font-size: clamp(1.75rem, 1rem + 5vw, 2.6rem); overflow-wrap: anywhere; }
+  .stats { grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); }
+  .stats > * { padding: var(--s3) var(--s4); min-width: 0; overflow-wrap: anywhere; }
+  .stats strong, .stats b, .stats dd, .stats .stat-num { font-size: 1.4rem; }
+  .lec-card { padding: var(--s4); min-width: 0; box-shadow: var(--shadow-1); }
+  .lec-card.is-done::after { top: 14px; right: 12px; }
+}
+
+@media (max-width: 420px) {
+  /* 6. a byte (8 bits + gaps) always fits its row; longer rows wrap */
+  .bits { gap: 2px; }
+  .bit, .bits > .bit-label { width: 33px; }
+  .bit { font-size: 1.05rem; border-radius: 6px; }
+  .bit .bit-label { font-size: .56rem; letter-spacing: -.02em; }
+  .bits .bits-gap { flex: 0 1 auto; max-width: 6px; }
+
+  .widget-head, .widget-controls { padding-inline: var(--s3); }
+  .widget-body { padding: var(--s3); }
+  .cell { min-width: 38px; min-height: 42px; padding: 2px 5px; font-size: .95rem; }
+  .cell-val { font-size: .95rem; }
+  .grid-matrix { grid-template-columns: repeat(var(--cols, 3), minmax(34px, auto)); gap: 3px; padding: 5px 6px; }
+  .grid-matrix .cell { min-width: 34px; min-height: 38px; }
+  .dpad { grid-template-columns: repeat(3, 48px); grid-template-rows: repeat(3, 48px); }
+  .hanoi { gap: 2px; }
+  .peg { padding-inline: 1px; }
+  .disk { font-size: .6rem; }
+  .flow-node { min-width: 0; }
+  .btn { padding-inline: var(--s3); }
+  .quiz-option { padding-inline: var(--s3); gap: var(--s2); }
+  .callout { padding: var(--s3) var(--s3) var(--s3) calc(var(--s3) + 36px); }
+  .callout::before { left: var(--s3); top: var(--s3); width: 24px; height: 24px; font-size: .82rem; }
+}
+
+@media (max-width: 640px) {
+  /* long button labels wrap instead of pushing the page wider */
+  .btn, .next-link { max-width: 100%; white-space: normal; text-align: center; overflow-wrap: anywhere; }
+  .lecture-foot .btn { margin-right: 0; margin-bottom: var(--s2); }
+  .home-hero::after { right: .12em; }
+}
+
+@media (max-width: 350px) {
+  /* 8 bits + group gap = 254px, inside the 262px widget body of a 320px phone */
+  .bit, .bits > .bit-label { width: 29px; }
+}
+
+@media (max-width: 640px) {
+  /* keep wrapped table columns readable: no column collapses to a sliver */
+  .table td:not(:first-child), .table th:not(:first-child) { min-width: 4.25em; }
+  .table:not(:has(tr > :nth-child(4))) td:not(:first-child),
+  .table:not(:has(tr > :nth-child(4))) th:not(:first-child) { min-width: 7em; }
+}
+@media (max-width: 640px) {
+  .table td:not(:first-child) code, .table th:not(:first-child) code { overflow-wrap: anywhere; }
+}
+
+/* 12. Extension of §11.2 — wrap code with the same hanging indent when it sits in a
+   two-column widget (half-width column) and on any touch device (e.g. phones in landscape),
+   so the highlighted step line is never scrolled out of view. */
+.widget-split .code {
+  --gutter: 3.2em;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  overflow-x: hidden;
+}
+.widget-split .code .line { position: relative; min-width: 0; max-width: 100%; padding-left: var(--gutter); padding-right: var(--s2); }
+.widget-split .code .line::before { position: absolute; left: 0; width: calc(var(--gutter) - .9em); margin-right: 0; }
+.widget-split .code--plain .line { padding-left: var(--s3); }
+@media (pointer: coarse) {
+  .code { --gutter: 3.2em; white-space: pre-wrap; overflow-wrap: anywhere; word-break: normal; overflow-x: hidden; }
+  .code .line { position: relative; min-width: 0; max-width: 100%; padding-left: var(--gutter); padding-right: var(--s2); }
+  .code .line::before { position: absolute; left: 0; width: calc(var(--gutter) - .9em); margin-right: 0; }
+  .code--plain .line { padding-left: var(--s3); }
+  .table th, .table td { overflow-wrap: anywhere; }
+  .table thead th { white-space: normal; }
+}
+
+/* 13. Tablet / landscape-phone band (641–899px): two-column widgets are narrow here too */
+.cells--nowrap { flex-wrap: wrap; width: auto; max-width: 100%; }
+.widget-split .table th, .widget-split .table td { padding: 8px 10px; overflow-wrap: anywhere; }
+.widget-split .table thead th { white-space: normal; }

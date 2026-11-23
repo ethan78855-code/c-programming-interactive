@@ -379,10 +379,14 @@ int main() {
 
 .l7-sizes .bar-row { width:100%; background:none; border:0; padding:2px 0; color: inherit; font: inherit; font-family: var(--font-mono); font-size:.82rem; text-align:left; cursor:pointer; border-radius: var(--r-sm); }
 .l7-sizes .bar-row:hover .bar-label { color: var(--accent); }
+@media (pointer: coarse), (max-width: 640px) { .l7-sizes .bar-row { min-height: 36px; padding: 4px 0; } }
 .l7-sizes { --label-w: 104px; --value-w: 64px; }
+#l7-size-kv > div:nth-child(3) { grid-column: 1 / -1; }
+#l7-size-kv dd { overflow-wrap: normal; word-break: normal; }
 
 .l7-param { display:grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); gap: var(--s3); align-items:center; }
-@container (max-width: 560px) { .l7-param { grid-template-columns: minmax(0,1fr); } .l7-link { transform: rotate(90deg); justify-self:center; } }
+.l7-param-host { container-type: inline-size; }
+@container (max-width: 380px) { .l7-param { grid-template-columns: minmax(0,1fr); } .l7-link { transform: rotate(90deg); justify-self:center; } }
 .l7-frame { border:1.5px solid var(--line-strong); border-radius: var(--r-lg); padding: var(--s3); background: var(--surface); transition: opacity .3s, border-color .3s; }
 .l7-frame.is-gone { opacity:.35; border-style:dashed; }
 .l7-frame h5 { margin:0 0 var(--s2); font-family: var(--font-mono); font-size:.9rem; }
@@ -557,7 +561,7 @@ int main() {
       .map((w, i) => (i === 4 ? '<span class="bits-gap" style="width:var(--s2)"></span>' : '') + `<span class="l7-tr" data-w="${w}"><i></i>OFF</span>`)
       .join('');
     const s4 = C.section(
-      'l7-bits',
+      'l7-bits-sec',
       '04',
       '0 與 1：位元與位元組',
       C.prose(
@@ -642,7 +646,7 @@ int main() {
     );
 
     const s6 = C.section(
-      'l7-sizes',
+      'l7-sizes-sec',
       '06',
       '變數型態與大小',
       C.prose('<p>不同型態佔用的記憶體大小不同，能表示的範圍也不同。用 <code>sizeof(型態)</code> 可以查到實際大小（單位是 byte）。</p>') +
@@ -690,7 +694,7 @@ int main() {
           hint: '先選擇傳遞方式，再按「下一步」追蹤 main 的 a 與 foo 的參數。',
           body: `<div class="widget-split">
               <div id="l7-cbv-code"></div>
-              <div>
+              <div class="l7-param-host">
                 <div class="l7-param">
                   <div class="l7-frame" id="l7-cbv-main"><h5>main()</h5>
                     <div class="l7-var" id="l7-cbv-a"><span class="nm">a</span><span class="ad">位址 0x1000</span><span class="vl" id="l7-cbv-aval">—</span></div>

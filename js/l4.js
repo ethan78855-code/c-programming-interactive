@@ -626,7 +626,7 @@ ${C.field('數值', '<input type="text" id="l4-fmt-val" value="1699.999" autocom
       C.section('l4-nested', '03', '巢狀迴圈', s3) +
       C.section('l4-matrix', '04', '二維陣列：矩陣乘法', s4) +
       C.section('l4-while', '05', 'while 與 do...while 迴圈', s5) +
-      C.section('l4-atm', '06', '綜合練習：簡易 ATM', s6) +
+      C.section('l4-atm-sec', '06', '綜合練習：簡易 ATM', s6) +
       C.section('l4-printf', '07', 'printf 格式化輸出', s7)
     );
   }
@@ -1762,7 +1762,7 @@ printf("rate: '%*.*f'\n", width, precision, rate);   // 等同於 "%${w}.${p}f"`
 .l4-steps{margin:var(--s3) 0;padding-left:1.4em;font-size:.92rem;line-height:1.8}
 .l4-steps li{margin:2px 0}
 .l4-sub{margin:var(--s4) 0 var(--s2);font-size:.95rem}
-.l4-anat-line{font-family:var(--font-mono);font-size:1.1rem;font-weight:700;line-height:2.4;padding:var(--s3) var(--s4);background:var(--code-bg);color:var(--code-ink);border-radius:var(--r-sm);overflow-x:auto;white-space:nowrap}
+.l4-anat-line{font-family:var(--font-mono);font-size:1.1rem;font-weight:700;line-height:2.4;padding:var(--s3) var(--s4);background:var(--code-bg);color:var(--code-ink);border-radius:var(--r-sm);overflow-x:auto;white-space:normal}
 .l4-part{font:inherit;color:inherit;background:color-mix(in srgb,var(--code-ink) 10%,transparent);border:1.5px dashed color-mix(in srgb,var(--code-ink) 40%,transparent);border-radius:6px;padding:2px 8px;cursor:pointer}
 .l4-part:hover{border-color:var(--accent-2)}
 .l4-part[aria-pressed="true"]{background:var(--hi);color:var(--ink);border-style:solid;border-color:var(--accent-2)}
@@ -1772,6 +1772,14 @@ printf("rate: '%*.*f'\n", width, precision, rate);   // 等同於 "%${w}.${p}f"`
 .l4-stargrid .cell{min-width:28px;min-height:28px;padding:0;font-size:.95rem}
 .l4-stargrid{gap:3px}
 .l4-star-wrap{overflow-x:auto;padding:4px 2px}
+.l4-part{white-space:nowrap}
+.l4-stargrid{grid-template-columns:repeat(var(--cols),minmax(0,28px));max-width:100%}
+.l4-stargrid .cell{min-width:0;min-height:0;width:auto;aspect-ratio:1/1}
+@media (max-width:899.98px){
+  .l4-anat-line{font-size:.95rem;line-height:2.7;padding:var(--s2) var(--s3)}
+  .l4-stargrid{gap:2px}
+  .l4-stargrid .cell{font-size:clamp(.55rem,3.2vw,.95rem);border-radius:4px}
+}
 .l4-space .cell-val{color:var(--muted)}
 .l4-armnow{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);min-height:3rem;margin-bottom:var(--s3)}
 .l4-armnum{font-family:var(--font-mono);font-size:2rem;font-weight:700;color:var(--ink)}

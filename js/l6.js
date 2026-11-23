@@ -360,6 +360,7 @@ int main() {
           tag: '動畫',
           hint: '同一種顏色＝同一個 fib(k)。滑過或點一個節點，會標出所有重複的同名呼叫。按「自動播放」看電腦真正的執行順序（深度優先）。',
           body: `<div class="tree tree--wide" id="l6-fib-tree"></div>
+<p class="caption" id="l6-fib-hint" hidden>↔ 這棵樹比螢幕寬，可以在框內左右滑動查看全部節點。</p>
 <div class="widget-split">
   <div><div id="l6-fib-kv"></div><p class="caption">目前的呼叫堆疊（由下往上）</p><p class="l6-path" id="l6-fib-path"></p></div>
   <div><p class="caption">每個 fib(k) 總共被呼叫幾次</p><div class="bar-chart" id="l6-fib-bars" style="--label-w:64px"></div></div>
@@ -483,7 +484,7 @@ int main() {
 
   function secHanoi() {
     return C.section(
-      'l6-hanoi',
+      'l6-hanoi-sec',
       '07',
       '河內塔（Tower of Hanoi）',
       C.prose(`<p>傳說有一座被視為「宇宙中心」的神廟，廟裡的木板上豎立著三根細長的柱子。其中一根柱子上，依大小由下到上套著 <strong>64 片金盤</strong>，最大在最底層。天神要僧侶把這 64 個金盤從第一根柱子搬到第三根，但必須遵守兩條規則：</p>
@@ -538,7 +539,8 @@ int main() {
             ['<code>static</code><br><small>靜態變數</small>', '函式內或全域', '程式開始到結束；<strong>只初始化一次</strong>', '區域 static：所在區塊；全域 static：只限本檔案', '靜態資料區', '0'],
             ['<code>extern</code><br><small>外部變數</small>', '全域（全域變數預設就是 extern）', '程式開始到結束', '可在其他函式、甚至同專案的其他檔案用 extern 宣告取用', '靜態資料區', '0'],
             ['<code>register</code><br><small>暫存器變數</small>', '函式內', '同 auto', '同 auto', '建議編譯器放進 CPU 暫存器（可被忽略），不能用 &amp; 取址', '不確定'],
-          ]
+          ],
+          'l6-sc'
         ) +
         C.prose(`<h3>自動變數 vs 靜態變數</h3>
 <p><strong>自動變數</strong>（或稱內部變數）只能是區域變數。它從宣告處開始有效，離開函式時就釋放記憶體；下次進入函式時重新配置，<strong>無法保留舊值</strong>。函式的區域變數預設都是 <code>auto</code>，所以這個關鍵字幾乎不會被寫出來。</p>
@@ -950,8 +952,12 @@ int main() {
         svg.appendChild(g);
         return g;
       });
+      svg.style.width = `clamp(${Math.round(W * 0.6)}px, 100%, ${W}px)`;
+      svg.style.display = 'block';
       host.innerHTML = '';
       host.appendChild(svg);
+      const hint = C.$('#l6-fib-hint', w);
+      if (hint) hint.hidden = !(host.scrollWidth > host.clientWidth + 4);
       // duplicate counts chart
       const counts = {};
       T.nodes.forEach((nd) => (counts[nd.k] = (counts[nd.k] || 0) + 1));
@@ -1052,10 +1058,14 @@ int main() {
       loop.push(n);
       pow2.push(Math.pow(2, n));
     }
-    const VW = 640;
+    let VW = 640;
     const VH = 320;
     const M = { l: 70, r: 18, t: 16, b: 42 };
-    const PW = VW - M.l - M.r;
+    let PW = VW - M.l - M.r;
+    const fitWidth = () => {
+      VW = Math.round(Math.min(640, Math.max(300, host.clientWidth || 640)));
+      PW = VW - M.l - M.r;
+    };
     const PH = VH - M.t - M.b;
     let mode = 'lin';
     let cur = +nIn.value;
@@ -1067,6 +1077,7 @@ int main() {
     const LOGLBL = ['1', '10', '100', '1千', '1萬', '10萬', '100萬', '1千萬', '1億', '10億', '100億'];
 
     function draw() {
+      fitWidth();
       const svg = C.svgEl('svg', { viewBox: `0 0 ${VW} ${VH}`, class: 'l6-chart-svg', role: 'img', 'aria-label': 'fib(n) 呼叫次數成長圖' });
       const defs = C.svgEl('defs');
       const cp = C.svgEl('clipPath', { id: 'l6-clip' });
@@ -1148,6 +1159,14 @@ int main() {
       draw();
     });
     draw();
+    let lastW = host.clientWidth;
+    const onResize = () => {
+      if (!document.body.contains(host)) return window.removeEventListener('resize', onResize);
+      if (Math.abs(host.clientWidth - lastW) < 8) return;
+      lastW = host.clientWidth;
+      draw();
+    };
+    window.addEventListener('resize', onResize);
   }
 
   function mountGcd(root) {
@@ -1888,7 +1907,20 @@ int main() {
 #l6-fib-tree .fnode:focus-visible circle { stroke: var(--accent); stroke-width: 5; }
 /* growth chart */
 .l6-chart { overflow-x: auto; }
-.l6-chart-svg { display: block; width: 100%; min-width: 480px; height: auto; color: var(--ink); }
+@media (max-width: 640px) {
+  .l6-sc, .l6-sc tbody { display: block; border: 0; background: none; }
+  .l6-sc thead { display: none; }
+  .l6-sc tr { display: block; padding: var(--s3); margin-bottom: var(--s2); border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); }
+  .l6-sc td { display: block; position: relative; padding: 3px 0 3px 6.4em; border: 0; }
+  .l6-sc td::before { position: absolute; left: 0; top: 4px; width: 6em; color: var(--muted); font-size: .76rem; font-weight: 700; }
+  .l6-sc td:first-child { padding: 0 0 6px; margin-bottom: 4px; border-bottom: 1px dashed var(--line); font-size: 1rem; }
+  .l6-sc td:nth-child(2)::before { content: "宣告位置"; }
+  .l6-sc td:nth-child(3)::before { content: "存續期間"; }
+  .l6-sc td:nth-child(4)::before { content: "可見範圍"; }
+  .l6-sc td:nth-child(5)::before { content: "存放位置"; }
+  .l6-sc td:nth-child(6)::before { content: "沒給初值時"; }
+}
+.l6-chart-svg { display: block; width: 100%; height: auto; color: var(--ink); }
 .l6-chart-svg .tick { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
 .l6-chart-svg .axis { font-size: 12px; fill: var(--ink-2); }
 /* gcd rectangle */

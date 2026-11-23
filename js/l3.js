@@ -1384,17 +1384,28 @@ ${bad ? '' : `<li><code>flag</code> → <strong>${f ? 1 : 0}</strong>（非 0 �
 .l3-ring-top{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:var(--s5);align-items:center}
 @media (max-width:640px){.l3-ring-top{grid-template-columns:minmax(0,1fr)}}
 .l3-bitgrid{display:flex;flex-direction:column;gap:var(--s2);margin:var(--s3) 0}
-.l3-bitrow{display:grid;grid-template-columns:6.5em max-content minmax(7em,1fr);align-items:center;gap:var(--s3)}
+.l3-bitrow{display:grid;grid-template-columns:6.5em max-content minmax(0,1fr);align-items:center;gap:var(--s3)}
 .l3-bitrow .bits{margin:0;flex-wrap:nowrap}
 .l3-bitname{font-family:var(--font-mono);font-weight:700;font-size:.9rem;color:var(--ink-2);text-align:right}
-.l3-bitval{font-family:var(--font-mono);font-size:.9rem;color:var(--ink);white-space:nowrap}
+.l3-bitval{font-family:var(--font-mono);font-size:.9rem;color:var(--ink);min-width:0;overflow-wrap:anywhere}
 .l3-op{color:var(--accent-2)}
 .l3-bitrule{border-bottom:2px solid var(--ink-2);padding-bottom:2px}
 .l3-labels .bit-label{width:40px}
-@media (max-width:420px){.l3-labels .bit-label{width:34px}}
+@media (max-width:420px){.l3-labels .bit-label{width:33px}}
+@media (max-width:350px){.l3-labels .bit-label{width:29px}}
 @media (max-width:560px){.l3-bitrow{grid-template-columns:max-content;gap:2px}.l3-bitname{text-align:left}.l3-bitrow>span:empty{display:none}}
 .l3-tables{display:flex;flex-wrap:wrap;gap:var(--s4)}
+@media (max-width:1100px){
+  .l3-evaltable,.l3-evaltable tbody{display:block;border:0;background:none}
+  .l3-evaltable thead{display:none}
+  .l3-evaltable tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px var(--s3);align-items:center;padding:var(--s3);margin-bottom:var(--s2);border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface)}
+  .l3-evaltable td{display:block;padding:0;border:0}
+  .l3-evaltable td:first-child{grid-column:1/-1}
+  .l3-evaltable td:first-child code{white-space:normal;word-break:break-word}
+}
 .l3-tables .table-wrap{flex:1 1 150px;margin:0}
+@media (max-width:640px){.l3-tt{display:table;width:100%}.l3-tt th,.l3-tt td{padding:6px 8px;text-align:center}.l3-tables .table-wrap{flex:1 1 100%}}
+@media (pointer:coarse),(max-width:640px){#l3-bits .seg>button,.seg>button{min-width:36px}}
 .l3-tt caption{caption-side:top;text-align:left;font-family:var(--font-mono);font-weight:700;padding:0 0 var(--s1);color:var(--ink-2)}
 .l3-tt tbody tr{cursor:pointer}
 .table tbody tr.is-hi>*{background:var(--hi);color:var(--ink);font-weight:700}

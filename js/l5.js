@@ -430,7 +430,7 @@ while(1){
 
   function secFile() {
     return C.section(
-      'l5-file',
+      'l5-file-sec',
       '05',
       '檔案讀取：fopen() → fgets() → fclose()',
       C.prose(`
@@ -540,7 +540,7 @@ while(1){
 
   function secPw() {
     return C.section(
-      'l5-pw',
+      'l5-pw-sec',
       '07',
       '綜合練習：簡易密碼檢查器',
       C.prose(`
@@ -1403,6 +1403,7 @@ while(1){
       const max = Math.max(exp, ...counts);
       const hiIdx = counts.indexOf(Math.max(...counts));
       chart.style.setProperty('--chart-h', '150px');
+      chart.style.setProperty('--n', String(counts.length));
       chart.innerHTML = counts
         .map((c, i) => {
           const v = X + i;
@@ -1751,7 +1752,10 @@ while(1){
 .l5-arr-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s2); font-size: .85rem; }
 .l5-arr-head code { font-size: .78rem; color: var(--muted); background: none; }
 .l5-hist-wrap { overflow-x: auto; }
-.l5-hist { min-width: 260px; }
+.l5-hist { min-width: max(260px, calc(var(--n, 10) * 20px)); }
+.l5-ct th:first-child, .l5-ct td:first-child { position: sticky; left: 0; z-index: 1; background: var(--surface); }
+.l5-ct thead th:first-child { background: var(--surface-2); }
+.l5-ct tr.is-hi > :first-child { background: var(--hi); }
 .l5-hist .bar-track { position: relative; }
 .l5-hist .bar-label { font-size: .7rem; }
 .l5-hist .bar-value { font-size: .62rem; color: var(--muted); }

@@ -704,7 +704,7 @@ ${['R', 'G', 'B']
 .l2b-h5{margin:var(--s4) 0 var(--s2);font-size:.8rem;font-weight:500;color:var(--muted)}
 .l2b-conv-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--s3)}
 .l2b-conv-fields input{width:100%}
-.l2b-groups{display:flex;gap:6px;width:max-content}
+.l2b-groups{display:flex;flex-wrap:wrap;gap:6px}
 .l2b-group{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 8px;border:1.5px solid var(--series);border-radius:8px;background:color-mix(in srgb,var(--series) 12%,var(--surface));font-family:var(--font-mono)}
 .l2b-gbits{font-size:.95rem;letter-spacing:.12em}
 .l2b-gbits .l2b-pad{opacity:.35}
