@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C 語言互動講義｜程式設計（C 語言）</title>
+<meta name="description" content="把程式設計（C 語言）8 份講義整理成可以動手玩的互動圖解：編譯流程、資料型態、進位制、運算子、迴圈、字串、遞迴與記憶體。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=3">
+<script>
+  try { var t = JSON.parse(localStorage.getItem('ccourse:theme')); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar" aria-label="課程目錄">
+    <a class="sidebar-brand" href="#/">程式設計（C語言）<small>互動講義 · 王志航</small></a>
+    <nav class="nav" id="nav" aria-label="講義列表"></nav>
+    <div class="sidebar-foot">
+      <div class="progress-ring" data-progress-ring style="--p:0%" title="學習進度">0/8</div>
+      <div class="progress" data-progress style="--p:0%"><span data-progress-text>0 / 8 講完成</span></div>
+      <button type="button" class="theme-toggle" aria-pressed="false" aria-label="切換主題"><span class="theme-icon" aria-hidden="true">◐</span></button>
+    </div>
+  </aside>
+  <div class="scrim" aria-hidden="true"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <button type="button" class="menu-btn" aria-label="開啟目錄" aria-expanded="false" aria-controls="sidebar"></button>
+      <a class="topbar-title" href="#/">C 語言互動講義</a>
+      <button type="button" class="theme-toggle" aria-pressed="false" aria-label="切換主題"><span class="theme-icon" aria-hidden="true">◐</span></button>
+    </header>
+    <main id="main" tabindex="-1"></main>
+  </div>
+</div>
+
+<script src="js/core.js?v=3"></script>
+<script src="js/l1.js?v=3"></script>
+<script src="js/l2.js?v=3"></script>
+<script src="js/l2b.js?v=3"></script>
+<script src="js/l3.js?v=3"></script>
+<script src="js/l4.js?v=3"></script>
+<script src="js/l5.js?v=3"></script>
+<script src="js/l6.js?v=3"></script>
+<script src="js/l7.js?v=3"></script>
+</body>
+</html>
